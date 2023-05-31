@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { PaymentService } from './payment.service';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class PaymentController {
@@ -8,5 +9,25 @@ export class PaymentController {
   @Get()
   getHello(): string {
     return this.paymentService.getHello();
+  }
+
+  @MessagePattern('makeUpiPayment')
+  makeUpiPayment(orderInfo) {
+    console.log('orderInfo', orderInfo);
+    return 'UPI Successful';
+  }
+
+  @MessagePattern('makeCardPayment')
+  makeCardPayment() {
+    return 'Card Successful';
+  }
+
+  @EventPattern('makeNetbankingPayment')
+  makeNetbankingPayment() {
+
+  }
+
+  selectPaymentType() {
+
   }
 }
